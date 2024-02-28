@@ -28,7 +28,13 @@ https://github.com/gi949/homework_lesson4
 В файле elk/inventories/opensearch/hosts настраиваем внешние и внутренние ip для нод кластера OpenSearch и Dashboards,
 а также роли нод кластера OpenSearch.
 
+Устанавливаем java на ноды кластера OpenSearch
 
+ansible-playbook jv_ins.yml
+
+Устанавливаем и настраиваем кластер OpenSearch и Dashboards
+
+ansible-playbook elk/opensearch.yml -i elk/inventories/opensearch/hosts --extra-vars "admin_password=<пароль> kibanaserver_password=<пароль> logstash_password=<пароль> fluentbit_password=<пароль>" -b
 
 
 
