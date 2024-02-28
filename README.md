@@ -16,3 +16,8 @@ terraform init
 Проверка сценария
 
 terraform terraform plan
+
+Создание и настройка кластера описана в
+
+https://github.com/gi949/homework_lesson4
+
