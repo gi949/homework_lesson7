@@ -47,5 +47,13 @@ ansible-playbook fluent.yml
 
 ![index-all](https://github.com/gi949/homework_lesson7/assets/94520051/9b8b04ca-590c-40b6-8634-5c31151f8d7f)
 
+Создаем индекс для nginx
+
+![index-nginx-1](https://github.com/gi949/homework_lesson7/assets/94520051/ce95a68c-2435-4a08-a2b1-cdae0a03125e)
+
+![index-nginx-2](https://github.com/gi949/homework_lesson7/assets/94520051/6e504d73-89d8-4f51-8f3b-0be5fafd044b)
+
+![index-nginx-3](https://github.com/gi949/homework_lesson7/assets/94520051/bb458582-6c62-4ac1-897a-256d8483a309)
+
 
 
