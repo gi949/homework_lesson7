@@ -40,9 +40,12 @@ ansible-playbook elk/opensearch.yml -i elk/inventories/opensearch/hosts --extra-
 
 ansible-playbook fluent.yml
 
+Подключаемся к веб-интерфейсу Dashboards по <внешний ip:5601> под логином admin.
+
+Проверяем, что логи от nginx, php-fpm и mysql поступают:
 
 
-
+![index-all](https://github.com/gi949/homework_lesson7/assets/94520051/9b8b04ca-590c-40b6-8634-5c31151f8d7f)
 
 
 
