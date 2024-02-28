@@ -21,3 +21,18 @@ terraform terraform plan
 
 https://github.com/gi949/homework_lesson4
 
+Настраивать кластер OpenSearch и Dashboards будем на ВМ нашего веб приложения.
+
+Три ноды кластера OpenSearch на web1, web2, bs1, Dashboards на bs2.
+
+В файле elk/inventories/opensearch/hosts настраиваем внешние и внутренние ip для нод кластера OpenSearch и Dashboards,
+а также роли нод кластера OpenSearch.
+
+
+
+
+
+
+
+
+
