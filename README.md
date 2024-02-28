@@ -10,7 +10,9 @@ export YC_FOLDER_ID=$(yc config get folder-id)
 Ввести в консоли команды:
 
 Инициализация terraform
+
 terraform init
 
 Проверка сценария
+
 terraform terraform plan
