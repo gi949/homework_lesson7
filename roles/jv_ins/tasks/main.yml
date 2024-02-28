@@ -1,0 +1,11 @@
+---
+
+- name: install java
+  ansible.builtin.yum:
+    name: java-11-openjdk-devel.x86_64
+    state: present
+
+- name: Dashboards Install | Set the file ownerships
+  ansible.builtin.copy:
+    src: jdk11.sh
+    dest: /etc/profile.d/jdk11.sh

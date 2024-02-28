@@ -1,0 +1,36 @@
+[SERVICE]
+        Flush         1
+        Log_Level     info
+        Daemon        off
+        Parsers_File  parsers.conf
+        HTTP_Server   On
+        HTTP_Listen   0.0.0.0
+        HTTP_Port     2020
+
+[INPUT]
+        Name tail
+        Tag mysql-log
+        Path /var/log/mysqld.log
+        db /var/log/mysqld.db
+
+[FILTER]
+        Name modify
+        Match mysql-log
+        Set app mysql
+        Set vm {{ inventory_hostname }}
+
+[OUTPUT]
+        Name            opensearch
+        Match           mysql-log
+        Host            {{ os1_ip }}
+        Port            9200
+        HTTP_User       admin
+        HTTP_Passwd     Test123
+        Tls             On
+        Tls.verify       Off
+        Logstash_Format On
+        Logstash_Prefix mysql-log
+        Index           mysql-log
+        Replace_Dots    On
+        Retry_Limit     False
+        Suppress_Type_Name  On

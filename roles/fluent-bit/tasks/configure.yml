@@ -1,0 +1,40 @@
+---
+
+- name: Configure | fluent-bit outputs
+  template:
+    src: 'fluent-bit-lb.conf.j2'
+    dest: '/etc/fluent-bit/fluent-bit.conf'
+    mode: 0644
+  when: flagent == "lb"
+  notify: Restart fluentbit service
+
+- name: Configure | fluent-bit outputs
+  template:
+    src: 'fluent-bit-web.conf.j2'
+    dest: '/etc/fluent-bit/fluent-bit.conf'
+    mode: 0644
+  when: flagent == "web"
+  notify: Restart fluentbit service
+
+- name: Configure | fluent-bit outputs
+  template:
+    src: 'fluent-bit-db.conf.j2'
+    dest: '/etc/fluent-bit/fluent-bit.conf'
+    mode: 0644
+  when: flagent == "db"
+  notify: Restart fluentbit service
+
+- name: Configure | fluent-bit custom parsers
+  template:
+    src: 'parsers.conf.j2'
+    dest: '/etc/fluent-bit/parsers.conf'
+    mode: 0644
+  when: fluentbit_custom_parsers is defined
+  notify: Restart fluentbit service
+
+- name: Configure | fluent-bit start services
+  systemd:
+    name: 'fluent-bit.service'
+    state: restarted
+    enabled: yes
+    daemon_reload: yes

@@ -1,0 +1,87 @@
+---
+
+fluentbit_svc:
+  flush_seconds: 1
+  daemon: false
+  log_level: info
+  storage_path: "{{log_root}}/flb-storage"
+  storage_sync: normal
+  storage_checksum: !unsafe "off"
+  storage_mem_limit: 200M
+  ## optional
+  # log_file: ""
+  custom_parsers_files: []
+  custom_plugins_files: []
+  ## optional
+  # streams_file: ""
+  http_server:
+    state: true
+    listen_ip: 0.0.0.0
+    listen_port: 2020
+
+# fluentbit_filters: []
+# fluentbit_inputs: []
+# fluentbit_outputs: []
+# fluentbit_parsers: []
+
+
+fluentbit_apt_repo_focal: 'deb https://packages.fluentbit.io/ubuntu/focal focal main'
+fluentbit_apt_repo_bionic: 'deb https://packages.fluentbit.io/ubuntu/bionic bionic main'
+
+# FluentBit Settings
+log_out_host: os1
+log_out_port: 9200
+log_root: /var/log
+fluentbit_custom_parsers:
+  - Name: syslog-custom
+    Format: regex
+    Regex: '/^\<(?<pri>[0-9]+)\>(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$/'
+    Time_Key: time
+    Time_Format: "%b %d %H:%M:%S"
+    Time_Keep: "On"
+    Time_Offset: "+0300"
+  - Name: json-custom
+    Format: json
+    Time_Key: time
+    Time_Format: "%Y-%m-%dT%H:%M:%S.%L"
+    Time_Keep: "On"
+    Time_Offset: "+0300"
+    Decode_Field_As: |4
+        escaped_utf8 message do_next
+            Decode_Field_As json message
+fluentbit_inputs:
+  - Name: tail
+    Path: /var/log/messages
+    Tag: os-messages
+#    Parser: syslog-custom
+    Listen: 127.0.0.1
+    Port: 5140
+    Mode: tcp
+#    Buffer_Chunk_Size: 1M
+#    Buffer_Max_Size: 16M
+fluentbit_filters:
+  - Name: parser
+#    Parser: json-custom
+    Match: os-messages
+    Key_Name: message
+#    Reserve_Data: On
+#    Preserve_Key: Off
+
+#fluentbit_filters:
+#  - Name: record_modifier
+#    Match: os-messages
+#    Record: vm_name os2 
+
+fluentbit_outputs:
+  - Name: opensearch
+    Match: os-messages
+    Host: "{{ log_out_host }}"
+    Port: "{{ log_out_port }}"
+    HTTP_User: admin
+    HTTP_Passwd: "{{ admin_password  }}"
+    Tls: On
+    Tls.verify: Off
+    Index: os-messages 
+    Logstash_Format: "on"
+#    Logstash_Prefix: syslog
+#    Suppress_Type_Name: "On"

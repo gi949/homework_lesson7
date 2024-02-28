@@ -1,0 +1,37 @@
+[SERVICE]
+        Flush         1
+        Log_Level     info
+        Daemon        off
+        Parsers_File  parsers.conf
+        HTTP_Server   On
+        HTTP_Listen   0.0.0.0
+        HTTP_Port     2020
+
+[INPUT]
+        Name tail
+        Tag nginx-log
+        Parser nginx
+        Path /var/log/nginx/*.log
+        db /var/log/nginx.db
+
+[FILTER]
+        Name modify
+        Match nginx-log
+        Set app nginx
+        Set vm {{ inventory_hostname }}
+
+[OUTPUT]
+        Name            opensearch
+        Match           nginx-log
+        Host            {{ os1_ip }}
+        Port            9200
+        HTTP_User       admin
+        HTTP_Passwd     Test123
+        Tls             On
+        Tls.verify      Off
+        Logstash_Format On
+        Logstash_Prefix nginx-log
+        Index           nginx-log
+        Replace_Dots    On
+        Retry_Limit     False
+        Suppress_Type_Name  On

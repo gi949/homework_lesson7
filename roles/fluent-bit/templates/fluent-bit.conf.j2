@@ -1,0 +1,38 @@
+[SERVICE]
+        Flush         1
+        Log_Level     info
+        Daemon        off
+        Parsers_File  parsers.conf
+        HTTP_Server   On
+        HTTP_Listen   0.0.0.0
+        HTTP_Port     2020
+
+[INPUT]
+        Name tail
+        Tag sysapp.gen.log.messages
+        Parser sys_log_file
+        Path /var/log/messages
+        db /var/log/messages.db
+
+[FILTER]
+        Name modify
+        Match sysapp.gen.log.messages
+        Set app syslog
+        Set file /var/log/messages
+        Set vm {{ inventory_hostname }}
+
+[OUTPUT]
+        Name            opensearch
+        Match           sysapp.gen.log.*
+        Host            os1
+        Port            9200
+        HTTP_User       admin
+        HTTP_Passwd     Test123
+        Tls             On
+        Tls.verify       Off
+        Logstash_Format On
+        Logstash_Prefix sysapp-gen-log
+        Index           sysapp.gen.log
+        Replace_Dots    On
+        Retry_Limit     False
+        Suppress_Type_Name  On

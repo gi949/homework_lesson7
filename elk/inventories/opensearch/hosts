@@ -1,0 +1,23 @@
+[elk]
+os1 ansible_host=  ansible_user=centos ip= roles=data,master,ingest
+os2 ansible_host=  ansible_user=centos ip= roles=data,master,ingest
+os3 ansible_host=  ansible_user=centos ip= roles=data,master,ingest
+
+
+dashboards1 ansible_host=  ansible_user=centos ip=
+
+# List all the nodes in the os cluster
+[os-cluster]
+os1
+os2
+os3
+
+# List all the Master eligible nodes under this group
+[master]
+os1
+os2
+os3
+
+[dashboards]
+dashboards1
+
