@@ -55,5 +55,13 @@ ansible-playbook fluent.yml
 
 ![index-nginx-3](https://github.com/gi949/homework_lesson7/assets/94520051/bb458582-6c62-4ac1-897a-256d8483a309)
 
+В меню Discover смотрим логи nginx
 
+![index-nginx-5](https://github.com/gi949/homework_lesson7/assets/94520051/60248636-28f1-4e22-ae5f-b6541075734d)
+
+Аналогично создаем индексы для php-fpm и mysql, меню Discover смотрим логи php-fpm и mysql:
+
+![index-mysql](https://github.com/gi949/homework_lesson7/assets/94520051/0f3f544a-ba43-43ff-8fa8-fe0acf9ea77b)
+
+![index-php](https://github.com/gi949/homework_lesson7/assets/94520051/313b83fb-a491-4376-8f8d-8d233d555b97)
 
